@@ -15,7 +15,7 @@ tools = [search_tool, scrape_tool]
 
 
 # Set the title of the app
-st.title('Multi Agent stock market sentiment')
+st.title('Multi Agent stock market analysis')
 
 # Create session state to manage page navigation
 if 'page' not in st.session_state:
@@ -65,15 +65,21 @@ elif st.session_state.page == 'stock_name':
         risk_management_agent = agents.risk_management_agent()
         investment_advisor_agent = agents.investment_advisor_agent()
         senior_writer = agents.senior_writer()
+        number_extractor = agents.number_extractor()
 
         current_stock_analysis = tasks.current_stock_analysis(agent=industry_expert_agent)
         current_market_analysis = tasks.current_market_analysis(agent=industry_expert_agent)
         news_and_social_media_analysis = tasks.news_and_social_media_analysis(agent=market_news_and_social_media_agent)
         quantitative_and_technical_analysis = tasks.quantitative_and_technical_analysis(agent=quantitative_and_technical_analyst_agent)
-        # graphs = tasks.graphs(agent="insert agent here")
+        extract_stock_predictions = tasks.extract_stock_predictions(agent = number_extractor)
         risk_assessments = tasks.risk_assessments(agent=risk_management_agent)
         investment_advice = tasks.investment_advice(agent=investment_advisor_agent)
         generate_report = tasks.generate_report(agent = senior_writer)
+
+
+        investment_advice.context = [current_stock_analysis, current_market_analysis, quantitative_and_technical_analysis, risk_assessments]
+        extract_stock_predictions.context = [quantitative_and_technical_analysis, investment_advice]
+        generate_report.context = [current_stock_analysis, current_market_analysis, quantitative_and_technical_analysis, risk_assessments, investment_advice]
 
         crew = Crew(
             agents = [
@@ -92,6 +98,7 @@ elif st.session_state.page == 'stock_name':
                 quantitative_and_technical_analysis,
                 risk_assessments,
                 investment_advice,
+                extract_stock_predictions,
                 generate_report
             ],
             verbose=True
@@ -99,7 +106,6 @@ elif st.session_state.page == 'stock_name':
 
         result = crew.kickoff(inputs={"company" : stock_name})
         st.write(result)
-        print(result)
 
 
 

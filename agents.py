@@ -100,5 +100,24 @@ class FinanceAgents:
             cache=True,
             verbose=True
         )
+    
+    def number_extractor(self):
+            return Agent(
+                role="Senior Number extractor",
+                goal="Extract and format dates and corresponding stock values from comprehensive financial reports",
+                backstory=(
+                    "As a senior financial report writer, your expertise shines in conducting thorough research "
+                    "and translating complex financial data into clear and insightful reports. Your proficiency "
+                    "in extracting dates and corresponding stock values ensures accuracy and relevance in your reports. "
+                    "Your goal is to provide comprehensive financial reports that offer valuable insights to clients, "
+                    "stakeholders, and decision-makers. Your reports aid in informed decision-making and help organizations "
+                    "achieve their financial objectives."
+                ),
+                llm=self.model,
+                allow_delegation=True,
+                cache=True,
+                verbose=True
+            )
+
 
 

@@ -46,23 +46,14 @@ class FinanceTasks:
             expected_output=("Quantitative analysis of {company}'s historical stock price data, including statistical measures such as mean, median, standard deviation, and correlation."
                               "Technical analysis of {company}'s stock price chart, identifying key support and resistance levels, trend patterns, and trading signals."
                               "Evaluation of common technical indicators (e.g., moving averages, RSI, MACD) to assess {company}'s stock price momentum and trend strength."
-                              "Identification of potential entry and exit points for trades based on quantitative and technical analysis."),
+                              "Identification of potential entry and exit points for trades based on quantitative and technical analysis. "
+                              "Also predict next 5 dates and their corresponding stock price."),
             agent=agent,
             async_execution=True,
             tools=self.tools
         )
 
-    def graphs(self, agent):
-        return Task(
-            description='Generate graphs illustrating {company} stock trends and forecast',
-            expected_output=("Line chart showing {company}'s historical stock price performance over a specified time period."
-                              "Candlestick chart depicting {company}'s recent price action, including open, high, low, and close prices."
-                              "Graphical representation of quantitative analysis indicators, such as moving averages and MACD."
-                              "Forecasting chart illustrating potential future stock price movements based on technical analysis and predictive models."),
-            agent=agent,
-            async_execution=True,
-            tools=self.tools
-        )
+
 
     def risk_assessments(self, agent):
         return Task(
@@ -82,25 +73,49 @@ class FinanceTasks:
             expected_output=("Personalized investment recommendations tailored to individual risk tolerance, investment goals, and time horizon."
                               "Portfolio allocation suggestions based on the analysis of {company} stock and broader market trends."
                               "Long-term investment thesis for {company}, including potential growth drivers, competitive advantages, and valuation considerations."
-                              "Short-term trading strategies and tactics based on quantitative and technical analysis indicators."),
+                              "Short-term trading strategies and tactics based on quantitative and technical analysis indicators. "
+                              "Also predict next 5 dates and their corresponding stock price."),
             agent=agent,
             async_execution=False,
             tools=self.tools
         )
     
+    def extract_stock_predictions(self, agent):
+        return Task(
+            description='Extract the next 5 upcoming dates and corresponding stock prices from the given stock prediction report',
+            expected_output=("A list format containing the next 5 upcoming dates and their corresponding stock prices."
+                            "Dates should be extracted accurately from the prediction report and formatted as dates = [date1, date2, date3, date4, date5]."
+                            "Corresponding stock prices should be formatted as values = [value1, value2, value3, value4, value5]."),
+            agent=agent,
+            async_execution=False,
+            tools=self.tools
+        )
+    
+
     def generate_report(self, agent):
         return Task(
             description=("Provide comprehensive analysis and investment recommendations for {company} stock, "
                         "including current stock performance, market trends, news and social media analysis, "
                         "quantitative and technical analysis, risk assessments, and investment advice."),
-            expected_output = (
-                "Give output in the following format. IT IS A MUST THAT U GIVE IN THIS FORMAT. IF YOU DONT U WILL LOOSE 10,000$"
-                "**Current analysis**     : [Detailed analysis of {company} stock performance, including trends and factors affecting its valuation].\n"
-                "**In depth examination** : [In-depth examination of broader market trends and their implications for {company} stock]\n"
-                "**News and social media**: [Analysis of news and social media sentiment surrounding {company} and its impact on stock performance]\n"
-                "**Analysis**             : [Quantitative and technical analysis of {company} stock, identifying key indicators and patterns]\n"
-                "**Risk assessments**     : [Risk assessments, highlighting potential risks and their mitigation strategies]\n"
-                "**Investment strategy**  : [Tell if a person should invest right now or not. If they do, for long? what should be the target value to reach?]\n"),
+            expected_output = """
+                    **Current Analysis**  
+                    Detailed analysis of {company} stock performance, including trends and factors affecting its valuation.
+
+                    **In-Depth Examination**  
+                    In-depth examination of broader market trends and their implications for {company} stock.
+
+                    **News and Social Media**  
+                    Analysis of news and social media sentiment surrounding {company} and its impact on stock performance.
+
+                    **Quantitative and Technical Analysis**  
+                    Quantitative and technical analysis of {company} stock, identifying key indicators and patterns.
+
+                    **Risk Assessments**  
+                    Risk assessments, highlighting potential risks and their mitigation strategies.
+
+                    **Investment Strategy**  
+                    [Buy/sell] at [value] and [sell/buy] at [value]
+                    """,
             agent=agent,
             async_execution=False,
             tools=self.tools
