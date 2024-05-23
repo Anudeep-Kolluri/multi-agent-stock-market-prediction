@@ -1,6 +1,5 @@
 # multi-agent-stock-market-prediction
-Predicts stock market using multi agents
-
+Predicts stock market using multi agents. Click [here](https://agentic-stock-market-analysis.streamlit.app/) to go to website
 - Clone the repo
 - run `streamlit run app.py`
 - enter openai api key and serper api key
