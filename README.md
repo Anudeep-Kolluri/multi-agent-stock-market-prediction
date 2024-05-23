@@ -8,4 +8,4 @@ Predicts stock market using multi agents
 - enter stock name
 - report is generated
 
-![Screenshot (44)](https://github.com/Anudeep-Kolluri/multi-agent-stock-market-prediction/assets/50168940/d8d1f2c9-ccb6-40b3-a4a5-d8f4559b7fed)
+![Screenshot (44)](https://github.com/Anudeep-Kolluri/multi-agent-stock-market-prediction/assets/50168940/36664056-f16a-4492-ac65-c110b798466a)
