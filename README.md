@@ -1,5 +1,7 @@
 # multi-agent-stock-market-prediction
-Predicts stock market using multi agents. Click [here](https://agentic-stock-market-analysis.streamlit.app/) to go to website
+Given a stock name, the project produces a detailed report of the stock considering factors like market trend, social media, risk assessment and gives an in depth investment advice.
+
+For this project, I have used crewAi's multi agentic workflow. By creating multiple agents, I can go in detail on specific field. Used gpt-4 as main llm model. Additionally, seper key is used to retrieve google search results and streamlit is used to showcase the project.Click [here](https://agentic-stock-market-analysis.streamlit.app/) to go to website
 - Clone the repo
 - run `streamlit run app.py`
 - enter openai api key and serper api key
